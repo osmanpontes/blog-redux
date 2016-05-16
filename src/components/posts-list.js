@@ -11,7 +11,7 @@ class PostsList extends Component{
     var spinner = new Spinner().spin()
     // console.log('spinner', spinner);
     // console.log('root', document.querySelector('#root'));
-    document.querySelector('#root').appendChild(spinner.el)
+    this.refs.myContainer.appendChild(spinner.el)
     // setTimeout(()=>{spinner.stop();console.log('terminou')}, 5000);
 		this.props.dispatch(fetchPosts()).then(()=>spinner.stop());
 	}
@@ -32,7 +32,7 @@ class PostsList extends Component{
 
   render() {
     return (
-      <div className="container">
+      <div ref="myContainer" className="container">
         <div className="row text-right">
           <Link to="/posts/new" className="btn btn-primary">
             Adicione um Post
