@@ -6,8 +6,14 @@ import {Link} from 'react-router';
 
 class PostsList extends Component{
 
-	componentWillMount(){
-		this.props.dispatch(fetchPosts()).then(()=>console.log('chegou'));
+	componentDidMount(){
+    //ver: http://stackoverflow.com/questions/25436445/using-jquery-plugins-that-transform-the-dom-in-react-components
+    var spinner = new Spinner().spin()
+    // console.log('spinner', spinner);
+    // console.log('root', document.querySelector('#root'));
+    document.querySelector('#root').appendChild(spinner.el)
+    // setTimeout(()=>{spinner.stop();console.log('terminou')}, 5000);
+		this.props.dispatch(fetchPosts()).then(()=>spinner.stop());
 	}
 
 
