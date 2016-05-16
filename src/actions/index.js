@@ -25,6 +25,7 @@ export function receivePosts(jsonData){
 	var receivedAt = new Date();
 	// var posts = jsonData.data.children.map(post=>post.data);
 	console.log('posts jsonData', jsonData);
+	var posts = jsonData;
 	return {
 		type: RECEIVE_POSTS,
 		posts,
@@ -46,7 +47,7 @@ export function deletePost(post){
 	}
 }
 
-function fetchPosts(post) {
+export function fetchPosts(post) {
 
   return function (dispatch) {
   	dispatch(requestPosts());

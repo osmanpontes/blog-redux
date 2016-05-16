@@ -19,7 +19,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
     	<Route path="/" component={App}>
     		<IndexRoute component={PostsList} />
-    		<Route path="/new" component={PostsCreate}/>
+    		<Route path="posts/new" component={PostsCreate}/>
     		<Route path="/posts/:postId" component={PostDetail}/>
     	</Route>
     </Router>
