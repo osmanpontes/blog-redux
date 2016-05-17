@@ -7,7 +7,6 @@ import Loader from 'react-loader';
 class PostsList extends Component{
 
 	componentDidMount(){
-    //ver: http://stackoverflow.com/questions/25436445/using-jquery-plugins-that-transform-the-dom-in-react-components
 		this.props.dispatch(fetchPosts()).then(()=>console.log('fetching successful'));
 	}
 

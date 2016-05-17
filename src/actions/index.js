@@ -33,12 +33,23 @@ export function receivePosts(jsonData){
 	}
 }
 
-export function createPost(post){
-	console.log('post on action', post);
+export function submitNewPost(post){
+	return (dispatch) => {
+		return axios.post('http://reduxblog.herokuapp.com/api/posts?key=programadorobjetivo', post)
+		  .then(function (response) {
+		    console.log('response',response);
+		    dispatch(createPost(post));
+		  })
+	}
+}
+
+function createPost(post){
+
 	return {
 		type:CREATE_POST,
 		post
-	}
+	};
+
 }
 
 export function deletePost(post){

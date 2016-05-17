@@ -1,15 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
-import { createPost } from '../actions/index';
+import { submitNewPost } from '../actions/index';
 import { Link } from 'react-router';
 
 class PostsCreate extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      isSubmitting: false
-    };
 
   }
 
@@ -18,13 +15,13 @@ class PostsCreate extends Component {
   };
 
   onSubmit(form) {
-  	console.log('props on submit', form);
-  	this.setState({isSubmitting:true});
-  	setTimeout(()=>{
-  		this.setState({isSubmitting:false});
-  		this.props.createPost(form);
-  	}, 5000)
   	
+  	var that = this;
+  	
+		return this.props.submitNewPost(form).then(function(){
+			that.context.router.push('/');
+		})
+
   }
 
   render() {
@@ -50,10 +47,8 @@ class PostsCreate extends Component {
           <textarea className="form-control" {...content} />
         </div>
 
-        <button type="submit" style={btnStyle} className="btn btn-primary" disabled={this.state.isSubmitting}>Salvar</button>
+        <button type="submit" style={btnStyle} className="btn btn-primary" disabled={submitting}>Salvar</button>
         <Link style={btnStyle} to="/" className="btn btn-danger">Cancelar</Link>
-        <p>Enviando: {submitting? "sim" : "nao"}</p>
-        <p>Enviando2: {this.state.isSubmitting? "sim" : "nao"}</p>
       </form>
     );
   }
@@ -71,4 +66,4 @@ PostsCreate.propTypes = {
 export default reduxForm({
   form: 'PostsCreateForm',
   fields: ['title', 'categories', 'content']
-}, null, {createPost})(PostsCreate);
+}, null, {submitNewPost})(PostsCreate);
