@@ -1,3 +1,16 @@
 .active{
 	color:green !important;
 }
+
+.has-danger input,
+.has-danger textarea{
+	border-color:#AB0B0B;
+}
+
+.has-danger label{
+	color:#AB0B0B;
+}
+
+.error-messages{
+	color:#AB0B0B;
+}
