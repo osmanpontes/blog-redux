@@ -25,7 +25,6 @@ class PostsCreate extends Component {
   }
 
   render() {
-  	console.log('props', this.props);
     const { fields: { title, categories, content }, handleSubmit, submitting } = this.props;
     const btnStyle = {margin:'10px'};
     return (

@@ -13,7 +13,7 @@ function listOfPosts (state = initialListOfPosts, action){
 			receivedAt:action.receivedAt
 		};
 	}else if(action.type === CREATE_POST){
-		return {...state, posts:[...state.posts, action.post]};
+		return {...state, posts:[action.post, ...state.posts]};
 	}
 	else{
 		return state;

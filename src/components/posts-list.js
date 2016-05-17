@@ -7,7 +7,7 @@ import Loader from 'react-loader';
 class PostsList extends Component{
 
 	componentDidMount(){
-		this.props.dispatch(fetchPosts()).then(()=>console.log('fetching successful'));
+		this.props.dispatch(fetchPosts());
 	}
 
 

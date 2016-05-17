@@ -61,11 +61,15 @@ export function deletePost(post){
 
 export function fetchPosts(post) {
 
-  return function (dispatch) {
-  	dispatch(requestPosts());
-    return fetch('http://reduxblog.herokuapp.com/api/posts?key=programadorobjetivo')
-    	.then(response => response.json())
-    	.then(jsonData => dispatch(receivePosts(jsonData)) )
+  return function (dispatch, getState) {
+  	const currentState = getState();
+  	if(!currentState.listOfPosts.receivedAt){
+	  	dispatch(requestPosts());
+	    return fetch('http://reduxblog.herokuapp.com/api/posts?key=programadorobjetivo')
+	    	.then(response => response.json())
+	    	.then(jsonData => dispatch(receivePosts(jsonData)) )
+  	}
+
   };
 }
 
