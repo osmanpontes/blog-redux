@@ -34,6 +34,7 @@ export function receivePosts(jsonData){
 }
 
 export function createPost(post){
+	console.log('post on action', post);
 	return {
 		type:CREATE_POST,
 		post

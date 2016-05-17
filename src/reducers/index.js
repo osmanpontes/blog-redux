@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import {REQUEST_POSTS, RECEIVE_POSTS} from '../actions'
+import {REQUEST_POSTS, RECEIVE_POSTS} from '../actions';
+import {reducer as formReducer} from 'redux-form';
 
 const initialListOfPosts = {isLoading:false, posts:[], receivedAt:null}
 function listOfPosts (state = initialListOfPosts, action){
@@ -18,7 +19,8 @@ function listOfPosts (state = initialListOfPosts, action){
 }
 
 const rootReducer = combineReducers({
-  listOfPosts
+  listOfPosts,
+  form: formReducer
 });
 
 export default rootReducer;
