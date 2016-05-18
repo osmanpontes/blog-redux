@@ -3,20 +3,10 @@ import {connect} from 'react-redux';
 import {fetchPosts} from '../actions';
 import {Link} from 'react-router';
 import Loader from 'react-loader';
-import Modal from 'react-modal';
+import DeleteModal from './delete-modal';
 
 
 
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
 
 
 class PostsList extends Component{
@@ -26,7 +16,6 @@ class PostsList extends Component{
     this.state = {modalIsOpen:false, selectedPost:{}};
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
   }
 
 	componentDidMount(){
@@ -39,11 +28,6 @@ class PostsList extends Component{
 
   closeModal(){
     this.setState({modalIsOpen: false});
-  }
-
-  afterOpenModal(){
-       // references are now sync'd and can be accessed.
-    this.refs.subtitle.style.color = '#f00';
   }
 
 
@@ -82,29 +66,11 @@ class PostsList extends Component{
             {this.renderPosts()}
           </ul>
         </div>
-                 
-          <Modal
-            isOpen={modalIsOpen}
-            onAfterOpen={this.afterOpenModal}
-            onRequestClose={this.closeModal}
-            style={customStyles}>
+              
+        <DeleteModal selectedPost={selectedPost}
+          isOpen={modalIsOpen}
+          onRequestClose={this.closeModal} />
 
-            <div className="modal-header">
-              <button onClick={this.closeModal} type="button" className="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 className="modal-title">Deseja excluir o item selecionado?</h4>
-            </div>
-
-            <div>
-              <h5 className="modal-title">{selectedPost.title}</h5>
-              <h6>{selectedPost.categories}</h6>
-              <p>Conteudo qualquer se houvesse, porem neste exemplo nao ha</p>
-            </div>
-
-            <div className="modal-footer">
-              <button onClick={this.closeModal} type="button" className="btn btn-default">Fechar</button>
-              <button type="button" className="btn btn-danger">Excluir</button>
-            </div>
-          </Modal>
       </Loader>
     );
   }
