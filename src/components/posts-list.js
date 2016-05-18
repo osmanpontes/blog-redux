@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchPosts} from '../actions';
+import {fetchPosts, selectPost} from '../actions';
 import {Link} from 'react-router';
 import Loader from 'react-loader';
 import DeleteModal from './delete-modal';
@@ -13,9 +13,7 @@ class PostsList extends Component{
 
   constructor(props) {
     super(props);
-    this.state = {modalIsOpen:false, selectedPost:{}};
     this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
   }
 
 	componentDidMount(){
@@ -23,11 +21,7 @@ class PostsList extends Component{
 	}
 
   openModal(post){
-    this.setState({modalIsOpen: true, selectedPost:post});
-  }
-
-  closeModal(){
-    this.setState({modalIsOpen: false});
+    this.props.dispatch(selectPost(post));
   }
 
 
@@ -47,8 +41,6 @@ class PostsList extends Component{
 
   render() {
 
-    const {selectedPost, modalIsOpen} = this.state;
-
     return (
       <Loader loaded={!this.props.list.isLoading}>
         <div className="container">
@@ -67,9 +59,7 @@ class PostsList extends Component{
           </ul>
         </div>
               
-        <DeleteModal selectedPost={selectedPost}
-          isOpen={modalIsOpen}
-          onRequestClose={this.closeModal} />
+        <DeleteModal/>
 
       </Loader>
     );

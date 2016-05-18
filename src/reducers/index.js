@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import {REQUEST_POSTS, RECEIVE_POSTS, CREATE_POST} from '../actions';
+import {REQUEST_POSTS, RECEIVE_POSTS, CREATE_POST, SELECT_POST} from '../actions';
 import {reducer as formReducer} from 'redux-form';
 
-const initialListOfPosts = {isLoading:false, posts:[], receivedAt:null};
+const initialListOfPosts = {isLoading:false, posts:[], receivedAt:null, modalPost:null};
 function listOfPosts (state = initialListOfPosts, action){
 	if(action.type === REQUEST_POSTS){
 		return {...state, isLoading:true};
@@ -10,10 +10,13 @@ function listOfPosts (state = initialListOfPosts, action){
 		return {
 			isLoading:false,
 			posts:action.posts,
-			receivedAt:action.receivedAt
+			receivedAt:action.receivedAt,
+			modalPost:null
 		};
 	}else if(action.type === CREATE_POST){
 		return {...state, posts:[action.post, ...state.posts]};
+	}else if(action.type === SELECT_POST){
+		return {...state, modalPost:action.post};
 	}
 	else{
 		return state;
