@@ -23,7 +23,7 @@ class PostsList extends Component{
 
   constructor(props) {
     super(props);
-    this.state = {modalIsOpen:false};
+    this.state = {modalIsOpen:false, selectedPost:{}};
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -33,8 +33,8 @@ class PostsList extends Component{
 		this.props.dispatch(fetchPosts());
 	}
 
-  openModal(){
-    this.setState({modalIsOpen: true});
+  openModal(post){
+    this.setState({modalIsOpen: true, selectedPost:post});
   }
 
   closeModal(){
@@ -51,9 +51,10 @@ class PostsList extends Component{
     return this.props.list.posts.map((post) => {
       return (
         <li className="list-group-item row" key={post.id}>
+          <button className="col-md-1" onClick={()=>this.openModal(post)}><i style={ {paddingRight:'7px'} } className="fa fa-trash-o"></i>Excluir</button>
+          <span className="col-md-5 col-md-offset-1">{post.categories}</span>
           <Link to={"posts/" + post.id}>
-            <span className="col-md-6">{post.categories}</span>
-            <strong className="col-md-6">{post.title}</strong>
+            <strong className="col-md-5">{post.title}</strong>
           </Link>
         </li>
       );
@@ -61,6 +62,9 @@ class PostsList extends Component{
   }
 
   render() {
+
+    const {selectedPost, modalIsOpen} = this.state;
+
     return (
       <Loader loaded={!this.props.list.isLoading}>
         <div className="container">
@@ -72,29 +76,34 @@ class PostsList extends Component{
           <h3>Posts</h3>
           <ul className="list-group">
   			    <li className="list-group-item row">
-  			        <strong className="col-md-6">Categorias</strong>
-  			        <strong className="col-md-6">Titulo</strong>
+  			        <strong className=" col-md-offset-2 col-md-5">Categorias</strong>
+  			        <strong className="col-md-5">Titulo</strong>
   			    </li>
             {this.renderPosts()}
           </ul>
         </div>
-                 <button onClick={this.openModal}>Open Modal</button>
+                 
           <Modal
-            isOpen={this.state.modalIsOpen}
+            isOpen={modalIsOpen}
             onAfterOpen={this.afterOpenModal}
             onRequestClose={this.closeModal}
             style={customStyles}>
 
-            <h2 ref="subtitle">Hello</h2>
-            <button onClick={this.closeModal}>close</button>
-            <div>I am a modal</div>
-            <form>
-              <input />
-              <button>tab navigation</button>
-              <button>stays</button>
-              <button>inside</button>
-              <button>the modal</button>
-            </form>
+            <div className="modal-header">
+              <button onClick={this.closeModal} type="button" className="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 className="modal-title">Deseja excluir o item selecionado?</h4>
+            </div>
+
+            <div>
+              <h5 className="modal-title">{selectedPost.title}</h5>
+              <h6>{selectedPost.categories}</h6>
+              <p>Conteudo qualquer se houvesse, porem neste exemplo nao ha</p>
+            </div>
+
+            <div className="modal-footer">
+              <button onClick={this.closeModal} type="button" className="btn btn-default">Fechar</button>
+              <button type="button" className="btn btn-danger">Excluir</button>
+            </div>
           </Modal>
       </Loader>
     );
