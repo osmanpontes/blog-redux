@@ -8,6 +8,9 @@ export const CREATE_POST = 'CREATE_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const SELECT_POST = 'SELECT_POST';
 
+const ROOT_URL = 'http://reduxblog.herokuapp.com/api';
+const API_KEY = '?key=programadorobjetivo';
+
 
 export function requestPost(post){
 	return {
@@ -61,12 +64,15 @@ function createPost(post){
 
 }
 
-export function deletePost(post){
-	return {
-		type:DELETE_POST,
-		post
-	}
+export function deletePost(post) {
+  const request = axios.delete(`${ROOT_URL}/posts/${post.id}${API_KEY}`);
+
+  return {
+    type: DELETE_POST,
+    payload: request
+  };
 }
+
 
 export function fetchPosts(post) {
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {selectPost} from '../actions';
+import {selectPost, deletePost} from '../actions';
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -18,12 +18,23 @@ class DeleteModal extends Component{
 
 	constructor(props){
 		super(props);
+		this.state = {submitting:false};
 		this.closeModal = this.closeModal.bind(this);
+		this.deletePost = this.deletePost.bind(this);
 
 	}
 
 	closeModal(){
 		this.props.selectPost(null);
+	}
+
+	deletePost(post){
+		this.setState({submitting:true});
+		this.props.deletePost(post)
+			.then((result)=>{
+				//o result eh objeto com propriedades type e payload onde payload eh o response da solcitacao
+				this.props.selectPost(null);
+		})
 	}
 
 	render(){
@@ -55,8 +66,8 @@ class DeleteModal extends Component{
 	      </div>
 
 	      <div className="modal-footer">
-	        <button onClick={this.closeModal} type="button" className="btn btn-default">Fechar</button>
-	        <button type="button" className="btn btn-danger">Excluir</button>
+	        <button disabled={this.state.submitting} onClick={this.closeModal} type="button" className="btn btn-default">Fechar</button>
+	        <button disabled={this.state.submitting} onClick={() => this.deletePost(selectedPost)} type="button" className="btn btn-danger">Excluir</button>
 	      </div>
 	    </Modal>
 		);
@@ -67,7 +78,7 @@ function mapStateToProps(state){
 	return {selectedPost: state.listOfPosts.modalPost};
 }
 
-export default connect(mapStateToProps, {selectPost})(DeleteModal)
+export default connect(mapStateToProps, {selectPost, deletePost})(DeleteModal)
 
 
 

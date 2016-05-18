@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
+import reduxPromise from 'redux-promise';
 import { Router, Route, hashHistory,browserHistory, Link, IndexRoute } from 'react-router'
 import App from './components/app';
 import PostsList from './components/posts-list';
@@ -12,7 +13,7 @@ import PostDetail from './components/post-detail';
 import reducers from './reducers';
 
 
-const createStoreWithMiddleware = applyMiddleware(thunkMiddleware, createLogger())(createStore);
+const createStoreWithMiddleware = applyMiddleware(thunkMiddleware,reduxPromise, createLogger())(createStore);
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
