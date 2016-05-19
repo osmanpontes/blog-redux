@@ -33,7 +33,8 @@ class DeleteModal extends Component{
 		this.props.deletePost(post)
 			.then((result)=>{
 				//o result eh objeto com propriedades type e payload onde payload eh o response da solcitacao
-				this.props.selectPost(null);
+				this.setState({submitting:false});
+				this.closeModal();
 		})
 	}
 

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { reduxForm } from 'redux-form';
-import { submitNewPost } from '../actions/index';
+import { submitNewPost, sendFlashMessage } from '../actions/index';
 import { Link } from 'react-router';
 
 class PostsCreate extends Component {
@@ -18,9 +18,19 @@ class PostsCreate extends Component {
   	
   	var that = this;
   	
-		return this.props.submitNewPost(form).then(function(){
+		var result = this.props.submitNewPost(form).then(function(payload){
 			that.context.router.push('/');
+			setTimeout(function(){
+				that.props.sendFlashMessage("Post foi criado com sucesso","alert-success");
+			});
+			
+		}).catch(function(){
+			that.context.router.push('/');
+			setTimeout(function(){
+				that.props.sendFlashMessage("Nao foi possivel realizar a operacao","alert-danger");
+			});
 		})
+
 
   }
 
@@ -91,4 +101,4 @@ export default reduxForm({
   form: 'PostsCreateForm',
   fields: ['title', 'categories', 'content'],
   validate
-}, null, {submitNewPost})(PostsCreate);
+}, null, {submitNewPost, sendFlashMessage})(PostsCreate);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import {Link} from 'react-router';
+import FlashMessage from './flash-message';
 
 export default class App extends Component {
   render() {
@@ -51,7 +52,7 @@ export default class App extends Component {
 			    </div>
 			  </div>
 			</nav>
-
+			<FlashMessage />
 			{this.props.children}
 			</div>
     );

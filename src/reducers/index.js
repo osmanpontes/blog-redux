@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
-import {REQUEST_POSTS, RECEIVE_POSTS, CREATE_POST, SELECT_POST, DELETE_POST} from '../actions';
+import {REQUEST_POSTS, RECEIVE_POSTS, CREATE_POST, SELECT_POST, DELETE_POST, FLASH_MESSAGE} from '../actions';
 import {reducer as formReducer} from 'redux-form';
+
 
 function findIndexOfId(items, id){
 	var index = -1;
@@ -48,9 +49,24 @@ function listOfPosts (state = initialListOfPosts, action){
 	}
 }
 
+const initialFlashState = {  
+	message: null,
+  className: null
+}
+
+const flashMessage = (state = initialFlashState, action) => {  
+  switch(action.type){
+    case FLASH_MESSAGE:
+      return action.message;
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   listOfPosts,
-  form: formReducer
+  form: formReducer,
+  flashMessage
 });
 
 export default rootReducer;

@@ -14,3 +14,8 @@
 .error-messages{
 	color:#AB0B0B;
 }
+
+.col-centered{
+    float: none !important;
+    margin: 0 auto;
+}
