@@ -1,18 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {selectPost, deletePost} from '../actions';
-import Modal from 'react-modal';
+import UiDeleteModal from './presentational/ui-delete-modal';
 
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
+
 
 class DeleteModal extends Component{
 
@@ -28,14 +19,15 @@ class DeleteModal extends Component{
 		this.props.selectPost(null);
 	}
 
-	deletePost(post){
+	deletePost(){
+		let postToDelete = this.props.selectedPost;
 		this.setState({submitting:true});
-		this.props.deletePost(post)
+		this.props.deletePost(postToDelete)
 			.then((result)=>{
 				//o result eh objeto com propriedades type e payload onde payload eh o response da solcitacao
 				this.setState({submitting:false});
 				this.closeModal();
-		})
+		});
 	}
 
 	render(){
@@ -50,27 +42,13 @@ class DeleteModal extends Component{
 		}
 
 		return(
-
-	    <Modal
-	      isOpen={selectedPost!==null}
-	      style={customStyles}>
-
-	      <div className="modal-header">
-	        <button onClick={this.closeModal} type="button" className="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 className="modal-title">Deseja excluir o item selecionado?</h4>
-	      </div>
-
-	      <div>
-	        <h5 className="modal-title">{title}</h5>
-	        <h6>{categories}</h6>
-	        <p>Conteudo qualquer se houvesse, porem neste exemplo nao ha</p>
-	      </div>
-
-	      <div className="modal-footer">
-	        <button disabled={this.state.submitting} onClick={this.closeModal} type="button" className="btn btn-default">Fechar</button>
-	        <button disabled={this.state.submitting} onClick={() => this.deletePost(selectedPost)} type="button" className="btn btn-danger">Excluir</button>
-	      </div>
-	    </Modal>
+			<UiDeleteModal 
+				onCloseModal={this.closeModal} 
+				onDeletePost={this.deletePost} 
+				submitting={this.state.submitting}
+				isOpen={selectedPost!==null} 
+				title={title} 
+				categories={categories} />
 		);
 	}
 }
