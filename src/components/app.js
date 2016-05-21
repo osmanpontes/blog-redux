@@ -2,19 +2,11 @@ import React from 'react';
 import { Component } from 'react';
 import {Link} from 'react-router';
 import FlashMessage from './flash-message';
+import ToggleAuthentication from './login';
 
 export default class App extends Component {
   render() {
     return (
-      // <div>
-	     //  <ul>
-	     //  	<li><Link activeClassName="active" onlyActiveOnIndex={true} to="/">List</Link></li>
-	     //  	<li><Link activeClassName="active" to="/new">Create</Link></li>
-	     //  	<li><Link activeClassName="active" to="/posts/1">Detail</Link></li>
-	     //  </ul>
-
-	     //  {this.props.children}
-      // </div>
       <div>
       <nav className="navbar navbar-default">
 			  <div className="container-fluid">
@@ -49,6 +41,9 @@ export default class App extends Component {
 			        </div>
 			        <button type="submit" className="btn btn-default">Buscar</button>
 			      </form>
+			      <ul className="nav navbar-nav navbar-right">
+        			<ToggleAuthentication />
+        		</ul>
 			    </div>
 			  </div>
 			</nav>

@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import {REQUEST_POSTS, RECEIVE_POSTS, CREATE_POST, SELECT_POST, DELETE_POST, FLASH_MESSAGE} from '../actions';
+import {REQUEST_POSTS, RECEIVE_POSTS, CREATE_POST,
+	 	SELECT_POST, DELETE_POST, FLASH_MESSAGE, LOGIN_USER} from '../actions';
 import {reducer as formReducer} from 'redux-form';
 
 
@@ -63,8 +64,18 @@ const flashMessage = (state = initialFlashState, action) => {
   }
 };
 
+const isAuthenticated = (state = false, action) => {
+	switch(action.type){
+		case LOGIN_USER:
+			return action.isAuthenticated;
+		default:
+			return state;
+	}
+}
+
 const rootReducer = combineReducers({
   listOfPosts,
+  isAuthenticated,
   form: formReducer,
   flashMessage
 });

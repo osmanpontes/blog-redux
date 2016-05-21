@@ -8,6 +8,7 @@ export const CREATE_POST = 'CREATE_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const SELECT_POST = 'SELECT_POST';
 export const FLASH_MESSAGE = 'FLASH_MESSAGE';
+export const LOGIN_USER = 'LOGIN_USER';
 
 const ROOT_URL = 'http://reduxblog.herokuapp.com/api';
 const API_KEY = '?key=programadorobjetivo';
@@ -101,6 +102,12 @@ export function sendFlashMessage (text, className){
   }
 };
 
+export function login(loggedIn){
+	return {
+		type:LOGIN_USER,
+		isAuthenticated:loggedIn
+	};
+}
 
 
 
