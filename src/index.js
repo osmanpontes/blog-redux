@@ -11,6 +11,7 @@ import PostsList from './components/posts-list';
 import PostsCreate from './components/posts-create';
 import PostDetail from './components/post-detail';
 import reducers from './reducers';
+import authWrapper from './components/hoc/authentication';
 
 
 const createStoreWithMiddleware = applyMiddleware(thunkMiddleware,reduxPromise, createLogger())(createStore);
@@ -20,7 +21,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
     	<Route path="/" component={App}>
     		<IndexRoute component={PostsList} />
-    		<Route path="posts/new" component={PostsCreate}/>
+    		<Route path="posts/new" component={authWrapper(PostsCreate)}/>
     		<Route path="/posts/:postId" component={PostDetail}/>
     	</Route>
     </Router>

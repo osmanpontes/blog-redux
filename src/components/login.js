@@ -17,7 +17,7 @@ class Login extends Component{
 
 	text(){
 		const {isAuthenticated} = this.props;
-		return isAuthenticated? "Logout" : "Login"
+		return isAuthenticated? "Sair" : "Entrar"
 	}
 
 	render(){

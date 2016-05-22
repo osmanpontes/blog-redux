@@ -16,7 +16,7 @@ class FlashMessage extends Component{
 
     //para que possa fechar sem intervencao do usuario apos 1 segundo
     //sugestao de melhoria: tornar o tempo um parametro no reducer para que fique parametrizado
-    setTimeout(()=>{this.close()},1000);
+    setTimeout(()=>{this.close()},1500);
 
     return (
       <div className="row">
