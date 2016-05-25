@@ -7,7 +7,6 @@ import Loader from 'react-loader';
 //componentDidMount e componentDidUpdate
 function onscroll(e){
 	const {onInfiniteScroll, isLoading} = this.props;
-
   if (this.wasReached() && !isLoading) {
   		window.removeEventListener('scroll',onscroll);
 			onInfiniteScroll();
@@ -20,9 +19,10 @@ export default class InfiniteScroll extends Component{
 		super(props);
 	}
 
+	//quando o usuario navegava da pagina de criacao de posts para a pagina inicial
+	// a referencia this.refs.infiniteContainer estava vindo como undefined aqui, dai a variavel global em window
 	wasReached(){
-		const containerRef = this.refs.infiniteContainer;
-		return (window.innerHeight + window.scrollY >= containerRef.offsetTop);
+		return (window.innerHeight + window.scrollY >= window.containerRef.offsetTop);
 	}
 
 	componentWillUpdate(nextProps){
@@ -35,10 +35,22 @@ export default class InfiniteScroll extends Component{
 	}
 
 	componentDidMount(){
-
+		console.log('did mount');
+		window.containerRef = this.refs.infiniteContainer;
 		onscroll = onscroll.bind(this);
 		window.addEventListener('scroll', onscroll);
 	}
+
+	/**************************************************************************************
+ 		metodo componentWillUnmount nao esta fazendo diferenca quanto a retirada do listener,
+		isto e, remover ou nao remover esta apresentando o mesmo resultado
+	***************************************************************************************/
+	// componentWillUnmount(){
+	// 	console.log('will umount');
+	// 	window.containerRef= null;
+	// 	// onscroll = onscroll.bind(this);  ****se inserir essa linha nao reconhecera o listener e carregara varios***
+	// 	window.removeEventListener('scroll', onscroll);
+	// }
 
 	render(){
 		return(
