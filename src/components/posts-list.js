@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {fetchPosts, selectPost} from '../actions';
+import {fetchPosts, selectPost, fetchMorePosts} from '../actions';
 import {Link} from 'react-router';
 import Loader from 'react-loader';
 import DeleteModal from './delete-modal';
@@ -15,6 +15,7 @@ class PostsList extends Component{
   constructor(props) {
     super(props);
     this.openModal = this.openModal.bind(this);
+    this.loadMorePosts = this.loadMorePosts.bind(this);
   }
 
 	componentDidMount(){
@@ -25,11 +26,15 @@ class PostsList extends Component{
     this.props.dispatch(selectPost(post));
   }
 
+  loadMorePosts(){
+    this.props.dispatch(fetchMorePosts());
+  }
+
 
   renderPosts() {
     return this.props.list.posts.map((post) => {
       return (
-        <li className="list-group-item row" key={post.id}>
+        <li className="list-group-item row">
           <button className="col-md-1" onClick={()=>this.openModal(post)}><i style={ {paddingRight:'7px'} } className="fa fa-trash-o"></i>Excluir</button>
           <span className="col-md-5 col-md-offset-1">{post.categories}</span>
           <Link to={"posts/" + post.id}>
@@ -61,7 +66,7 @@ class PostsList extends Component{
           </ul>
         </div>
         
-        <InfiniteScroll onInfiniteScroll={()=>console.log('cheguei no fim')} />
+        <InfiniteScroll onInfiniteScroll={this.loadMorePosts} />
 
         <DeleteModal/>
 

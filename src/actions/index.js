@@ -1,8 +1,10 @@
 import fetch from 'isomorphic-fetch';
 import axios from 'axios';
 export const REQUEST_POSTS = 'REQUEST_POSTS';
+export const REQUEST_MORE_POSTS = 'REQUEST_MORE_POSTS';
 export const REQUEST_POST = 'REQUEST_POST';
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
+export const RECEIVE_MORE_POSTS = 'RECEIVE_MORE_POSTS';
 export const RECEIVE_POST = 'RECEIVE_POST';
 export const CREATE_POST = 'CREATE_POST';
 export const DELETE_POST = 'DELETE_POST';
@@ -21,19 +23,35 @@ export function requestPost(post){
 	}
 }
 
+
 export function requestPosts(){
 	return {
 		type:REQUEST_POSTS	
 	};
 }
 
+export function requestMorePosts(){
+	return {
+		type:REQUEST_MORE_POSTS
+	}
+}
+
 export function receivePosts(jsonData){
 	var receivedAt = new Date();
-	// var posts = jsonData.data.children.map(post=>post.data);
 	console.log('posts jsonData', jsonData);
 	var posts = jsonData;
 	return {
 		type: RECEIVE_POSTS,
+		posts,
+		receivedAt
+	}
+}
+
+export function receiveMorePosts(jsonData){
+	var receivedAt = new Date();
+	var posts = jsonData;
+	return {
+		type: RECEIVE_MORE_POSTS,
 		posts,
 		receivedAt
 	}
@@ -87,6 +105,19 @@ export function fetchPosts() {
 	    	.then(response => response.json())
 	    	.then(jsonData => dispatch(receivePosts(jsonData)) )
   	}
+
+  };
+}
+
+//o ideal eh que possam ser especificados a pagina e a quantidade de items por pagina
+//o que trabalhando com uma api mais completa seria possivel
+export function fetchMorePosts(page,numberPerPage) {
+
+  return function (dispatch) {
+  	dispatch(requestMorePosts());
+    return fetch('http://reduxblog.herokuapp.com/api/posts?key=programadorobjetivo')
+    	.then(response => response.json())
+    	.then(jsonData => dispatch(receiveMorePosts(jsonData)) )
 
   };
 }

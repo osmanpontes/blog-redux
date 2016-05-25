@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import {REQUEST_POSTS, RECEIVE_POSTS, CREATE_POST,
-	 	SELECT_POST, DELETE_POST, FLASH_MESSAGE, LOGIN_USER} from '../actions';
+	 	SELECT_POST, DELETE_POST, FLASH_MESSAGE, LOGIN_USER,
+	 	REQUEST_MORE_POSTS, RECEIVE_MORE_POSTS} from '../actions';
 import {reducer as formReducer} from 'redux-form';
 
 
@@ -15,10 +16,19 @@ function findIndexOfId(items, id){
 	return index;
 }
 
-const initialListOfPosts = {isLoading:false, posts:[], receivedAt:null, modalPost:null};
+const initialListOfPosts = {isLoading:false,isLoadingMore:false, posts:[], receivedAt:null, modalPost:null};
 function listOfPosts (state = initialListOfPosts, action){
 	if(action.type === REQUEST_POSTS){
 		return {...state, isLoading:true};
+	}else if(action.type === REQUEST_MORE_POSTS){
+		return {...state, isLoadingMore:true}
+	}else if(action.type === RECEIVE_MORE_POSTS){
+		return {
+			isLoadingMore:false,
+			posts:[...state.posts, ...action.posts],
+			receivedAt:action.receivedAt,
+			modalPost:null
+		};
 	}else if(action.type === RECEIVE_POSTS){
 		return {
 			isLoading:false,
