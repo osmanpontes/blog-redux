@@ -66,7 +66,7 @@ class PostsList extends Component{
           </ul>
         </div>
         
-        <InfiniteScroll onInfiniteScroll={this.loadMorePosts} />
+        <InfiniteScroll onInfiniteScroll={this.loadMorePosts} isLoading={this.props.list.isLoadingMore} />
 
         <DeleteModal/>
 

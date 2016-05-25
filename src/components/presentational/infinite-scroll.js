@@ -9,11 +9,12 @@ export default class InfiniteScroll extends Component{
 
 	wasReached(){
 		const containerRef = this.refs.infiniteContainer;
+		console.log(containerRef.offsetTop);
 		return (window.innerHeight + window.scrollY >= containerRef.offsetTop);
 	}
 
 	componentDidMount(){
-		const {onInfiniteScroll} = this.props;
+		const {onInfiniteScroll, isLoading} = this.props;
 		
 		window.onscroll = function(ev) {
 			console.clear();
@@ -21,7 +22,10 @@ export default class InfiniteScroll extends Component{
 			console.log('scrollY', window.scrollY);
 			console.log('body offsetHeight', document.body.offsetHeight);
 
-	    if (this.wasReached()) {
+			//aqui o callback onInfiniteScroll esta sendo invocado diversas vezes mesmo com a condicao
+			//de que nao esteja carregando. Isso porque isLoading eh uma propriedade de estado do redux
+			//que demora mais pra ser atualizada que um novo listener de onscroll no objeto window
+	    if (this.wasReached() && !isLoading) {
     			onInfiniteScroll();
 	    }
 
@@ -32,9 +36,23 @@ export default class InfiniteScroll extends Component{
 	render(){
 		return(
 			<div ref="infiniteContainer" >
+				<h2 className="text-center">
+					{(this.props.isLoading ? this.props.loadingText : '')}
+				</h2>
 			</div>
 		)
 	}
 
 }
+
+InfiniteScroll.propTypes = {
+	isLoading: React.PropTypes.bool,
+	onInfiniteScroll: React.PropTypes.func.isRequired,
+	loadingText: React.PropTypes.string
+};
+
+InfiniteScroll.defaultProps = {
+	isLoading: false,
+	loadingText: '...Careggando'
+};
 
