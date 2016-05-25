@@ -42,15 +42,14 @@ export default class InfiniteScroll extends Component{
 	}
 
 	/**************************************************************************************
- 		metodo componentWillUnmount nao esta fazendo diferenca quanto a retirada do listener,
-		isto e, remover ou nao remover esta apresentando o mesmo resultado
+ 		retirada do listener neste metodo eh essencial!
 	***************************************************************************************/
-	// componentWillUnmount(){
-	// 	console.log('will umount');
-	// 	window.containerRef= null;
-	// 	// onscroll = onscroll.bind(this);  ****se inserir essa linha nao reconhecera o listener e carregara varios***
-	// 	window.removeEventListener('scroll', onscroll);
-	// }
+	componentWillUnmount(){
+		console.log('will umount');
+		window.containerRef= null;
+		// onscroll = onscroll.bind(this);  ****se inserir essa linha nao reconhecera o listener e carregara varios***
+		window.removeEventListener('scroll', onscroll);
+	}
 
 	render(){
 		return(
