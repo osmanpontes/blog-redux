@@ -76,7 +76,7 @@ export function deletePost(post) {
 }
 
 
-export function fetchPosts(post) {
+export function fetchPosts() {
 
   return function (dispatch, getState) {
   	const currentState = getState();

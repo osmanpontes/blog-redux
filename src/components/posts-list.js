@@ -4,6 +4,7 @@ import {fetchPosts, selectPost} from '../actions';
 import {Link} from 'react-router';
 import Loader from 'react-loader';
 import DeleteModal from './delete-modal';
+import InfiniteScroll from './presentational/infinite-scroll';
 
 
 
@@ -43,6 +44,7 @@ class PostsList extends Component{
 
     return (
       <Loader loaded={!this.props.list.isLoading}>
+        
         <div className="container">
           <div className="row text-right">
             <Link to="/posts/new" className="btn btn-primary">
@@ -58,7 +60,9 @@ class PostsList extends Component{
             {this.renderPosts()}
           </ul>
         </div>
-              
+        
+        <InfiniteScroll onInfiniteScroll={()=>console.log('cheguei no fim')} />
+
         <DeleteModal/>
 
       </Loader>
