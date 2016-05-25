@@ -66,7 +66,9 @@ class PostsList extends Component{
           </ul>
         </div>
         
-        <InfiniteScroll onInfiniteScroll={this.loadMorePosts} isLoading={this.props.list.isLoadingMore} />
+        <InfiniteScroll onInfiniteScroll={this.loadMorePosts}
+          isLoading={this.props.list.isLoadingMore}
+          loadingText= "Flash..." />
 
         <DeleteModal/>
 
